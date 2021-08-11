@@ -57,17 +57,48 @@
 
 package leetcode.editor.cn;
 
+import java.util.HashMap;
+import java.util.Stack;
+
 //Java：有效的括号
 public class T20_ValidParentheses {
     public static void main(String[] args) {
         Solution solution = new T20_ValidParentheses().new Solution();
         // TO TEST
+        boolean valid = solution.isValid("{}[]()");
+        System.out.println(valid);
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-        public boolean isValid(String s) {
+        HashMap<String, String> map = new HashMap<String, String>() {
+            {
+                put("(", ")");
+                put("[", "]");
+                put("{", "}");
+            }
+        };
 
+        public boolean isValid(String s) {
+            Stack<String> stack = new Stack<>();
+            char[] chars = s.toCharArray();
+            if (chars.length % 2 != 0) {
+                return false;
+            }
+            for (char aChar : chars) {
+                if (stack.size() > 0) {
+                    String str = stack.get(stack.size() - 1);
+                    String s1 = map.get(str) != null ? map.get(str) : "";
+                    if (String.valueOf(aChar).equals(s1)) {
+                        stack.pop();
+                    } else {
+                        stack.push(aChar + "");
+                    }
+                } else {
+                    stack.push(aChar + "");
+                }
+            }
+            return stack.size() == 0;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
