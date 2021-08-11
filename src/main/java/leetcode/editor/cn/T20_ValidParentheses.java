@@ -71,6 +71,7 @@ public class T20_ValidParentheses {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        //设置字符串的对应关系
         HashMap<String, String> map = new HashMap<String, String>() {
             {
                 put("(", ")");
@@ -82,10 +83,12 @@ public class T20_ValidParentheses {
         public boolean isValid(String s) {
             Stack<String> stack = new Stack<>();
             char[] chars = s.toCharArray();
+            //字符串长度是奇数 肯定不符合要求
             if (chars.length % 2 != 0) {
                 return false;
             }
             for (char aChar : chars) {
+                //栈长度不为0 则判断字符是否成对
                 if (stack.size() > 0) {
                     String str = stack.get(stack.size() - 1);
                     String s1 = map.get(str) != null ? map.get(str) : "";
